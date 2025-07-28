@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qeydiyyat - Ad Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="register-form">
+            <h2>Qeydiyyat</h2>
+            
+            <div id="message" class="message hidden"></div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="birthDate">Doğum Tarixi:</label>
+                    <input type="date" id="birthDate" name="birthDate" class="form-input" required min="1950-01-01" max="2025-12-31">
+                </div>
+                
+                <button type="submit" class="register-btn">Qeydiyyatdan Keç</button>
+            </form>
+            
+            <div class="ad-banner">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const birthDate = document.getElementById('birthDate').value;
+            const messageDiv = document.getElementById('message');
+            
+            if (!birthDate) {
+                showMessage('Doğum tarixi seçin', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ birthDate })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(data.message, 'success');
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                } else {
+                    showMessage(data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('Qeydiyyat zamanı xəta baş verdi', 'error');
+            }
+        });
+        
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 5000);
+        }
+        
+        // Set default date to today
+        document.getElementById('birthDate').valueAsDate = new Date();
+    </script>
+</body>
+</html>
