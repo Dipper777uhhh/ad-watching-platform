@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mükafatlar - Ad Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Mükafatlar</h1>
+            <div class="balance-display">
+                <div class="balance-amount" id="balanceAmount">0.0000</div>
+                <div class="balance-label">Balans (Qəpik)</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="message" class="message hidden"></div>
+
+            <!-- Ad Banner Top -->
+            <div class="ad-banner">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+                <script async="async" data-cfasync="false" src="//pl26899089.profitableratecpm.com/1df5b11923b54b495d2487bf1f148372/invoke.js"></script>
+                <div id="container-1df5b11923b54b495d2487bf1f148372"></div>
+            </div>
+
+            <div class="card promo-section">
+                <h3 style="margin-bottom: 20px; color: #333;">Promo Kod Daxil Et</h3>
+                <p style="color: #666; margin-bottom: 20px; text-align: center;">
+                    Hər gün 1 promo kod istifadə edə bilərsiniz. Hər kod 0.001 qəpik dəyərindədir.
+                </p>
+                
+                <form id="promoForm">
+                    <input 
+                        type="text" 
+                        id="promoCode" 
+                        class="promo-input" 
+                        placeholder="Promo kodu daxil edin..."
+                        maxlength="20"
+                        style="text-transform: uppercase;"
+                    >
+                    <button type="submit" class="promo-btn">
+                        Promo Kodu İstifadə Et (+0.001 Qəpik)
+                    </button>
+                </form>
+            </div>
+
+            <!-- Ad Sidebar -->
+            <div class="ad-sidebar">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+                <script async="async" data-cfasync="false" src="//pl26899089.profitableratecpm.com/1df5b11923b54b495d2487bf1f148372/invoke.js"></script>
+                <div id="container-1df5b11923b54b495d2487bf1f148372"></div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: #333;">Promo Kod Qaydaları</h3>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 10px 0; border-bottom: 1px solid #e0e0e0;">
+                            ✅ Hər gün yalnız 1 promo kod istifadə edə bilərsiniz
+                        </li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #e0e0e0;">
+                            💰 Hər promo kod 0.001 qəpik dəyərindədir
+                        </li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #e0e0e0;">
+                            📱 Promo kodlar kanalımızdan paylaşılır
+                        </li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #e0e0e0;">
+                            🔄 İstifadə edilmiş kodlar təkrar işləməz
+                        </li>
+                        <li style="padding: 10px 0;">
+                            ⏰ Hər gün yeni kodlar əlavə edilir
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: #333;">Promo Kod Nümunələri</h3>
+                <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; text-align: center;">
+                    <p style="color: #1976d2; margin-bottom: 15px; font-weight: bold;">
+                        Bu kodlar yalnız nümunədir - real kodlar kanaldan paylaşılır!
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-family: monospace; font-size: 14px;">
+                        <div style="background: white; padding: 10px; border-radius: 5px; border: 2px dashed #ccc;">EARN2024***</div>
+                        <div style="background: white; padding: 10px; border-radius: 5px; border: 2px dashed #ccc;">BONUS5X***</div>
+                        <div style="background: white; padding: 10px; border-radius: 5px; border: 2px dashed #ccc;">REWARD8M***</div>
+                        <div style="background: white; padding: 10px; border-radius: 5px; border: 2px dashed #ccc;">GIFT1L4***</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="promoUsedToday">0</div>
+                    <div class="stat-label">Bu gün istifadə edilən kod</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalFromPromos">0.000</div>
+                    <div class="stat-label">Promo kodlardan qazanc</div>
+                </div>
+            </div>
+
+            <!-- Ad Banner Bottom -->
+            <div class="ad-banner">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="/" class="nav-item">
+                <div class="nav-icon home"></div>
+                <span>Ana Səhifə</span>
+            </a>
+            <a href="/earn.html" class="nav-item">
+                <div class="nav-icon earn"></div>
+                <span>Qazanc</span>
+            </a>
+            <a href="/rewards.html" class="nav-item active">
+                <div class="nav-icon rewards"></div>
+                <span>Mükafatlar</span>
+            </a>
+            <a href="/withdraw.html" class="nav-item">
+                <div class="nav-icon withdraw"></div>
+                <span>Çıxarış</span>
+            </a>
+            <a href="/stars.html" class="nav-item">
+                <div class="nav-icon stars"></div>
+                <span>Ulduzlar</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        let userData = null;
+        let promoUsedToday = false;
+
+        // Load user data
+        async function loadUserData() {
+            try {
+                const response = await fetch('/api/user');
+                if (response.ok) {
+                    userData = await response.json();
+                    updateUI();
+                    checkPromoUsage();
+                } else {
+                    window.location.href = '/register.html';
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                window.location.href = '/register.html';
+            }
+        }
+
+        // Update UI with user data
+        function updateUI() {
+            if (userData) {
+                document.getElementById('balanceAmount').textContent = userData.balance;
+            }
+        }
+
+        // Check if promo was used today
+        function checkPromoUsage() {
+            const today = new Date().toISOString().split('T')[0];
+            const lastPromoDate = localStorage.getItem('lastPromoDate');
+            
+            if (lastPromoDate === today) {
+                promoUsedToday = true;
+                document.getElementById('promoUsedToday').textContent = '1';
+                
+                const promoBtn = document.querySelector('.promo-btn');
+                promoBtn.disabled = true;
+                promoBtn.textContent = 'Bu gün artıq kod istifadə etdiniz';
+                promoBtn.style.background = '#ccc';
+                
+                const promoInput = document.getElementById('promoCode');
+                promoInput.disabled = true;
+                promoInput.placeholder = 'Bu gün artıq promo kod istifadə etdiniz';
+            }
+        }
+
+        // Promo code form submission
+        document.getElementById('promoForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (promoUsedToday) {
+                showMessage('Bu gün artıq promo kod istifadə etmisiniz', 'error');
+                return;
+            }
+            
+            const promoCode = document.getElementById('promoCode').value.trim().toUpperCase();
+            
+            if (!promoCode) {
+                showMessage('Promo kod daxil edin', 'error');
+                return;
+            }
+            
+            if (promoCode.length < 5) {
+                showMessage('Promo kod ən azı 5 simvol olmalıdır', 'error');
+                return;
+            }
+            
+            const promoBtn = document.querySelector('.promo-btn');
+            promoBtn.disabled = true;
+            promoBtn.textContent = 'Yoxlanılır...';
+            
+            try {
+                const response = await fetch('/api/promo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ code: promoCode })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(`${data.message} +${data.earned} qəpik`, 'success');
+                    
+                    // Mark promo as used today
+                    const today = new Date().toISOString().split('T')[0];
+                    localStorage.setItem('lastPromoDate', today);
+                    promoUsedToday = true;
+                    
+                    // Update UI
+                    document.getElementById('promoUsedToday').textContent = '1';
+                    document.getElementById('promoCode').value = '';
+                    document.getElementById('promoCode').disabled = true;
+                    document.getElementById('promoCode').placeholder = 'Bu gün artıq promo kod istifadə etdiniz';
+                    
+                    promoBtn.textContent = 'Bu gün artıq kod istifadə etdiniz';
+                    promoBtn.style.background = '#ccc';
+                    
+                    // Refresh user data
+                    loadUserData();
+                } else {
+                    showMessage(data.message, 'error');
+                    promoBtn.disabled = false;
+                    promoBtn.textContent = 'Promo Kodu İstifadə Et (+0.001 Qəpik)';
+                }
+            } catch (error) {
+                showMessage('Promo kod yoxlanılarkən xəta baş verdi', 'error');
+                promoBtn.disabled = false;
+                promoBtn.textContent = 'Promo Kodu İstifadə Et (+0.001 Qəpik)';
+            }
+        });
+
+        // Auto-uppercase promo code input
+        document.getElementById('promoCode').addEventListener('input', (e) => {
+            e.target.value = e.target.value.toUpperCase();
+        });
+
+        // Show message function
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserData();
+        });
+    </script>
+</body>
+</html>
