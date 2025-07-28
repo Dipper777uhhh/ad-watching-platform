@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çıxarış - Ad Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Çıxarış</h1>
+            <div class="balance-display">
+                <div class="balance-amount" id="balanceAmount">0.0000</div>
+                <div class="balance-label">Balans (Qəpik)</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="message" class="message hidden"></div>
+
+            <!-- Ad Banner Top -->
+            <div class="ad-banner">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+            </div>
+
+            <div class="card withdraw-section">
+                <h3 style="margin-bottom: 20px; color: #333;">Pul Çıxarışı</h3>
+                <p style="color: #666; margin-bottom: 20px; text-align: center;">
+                    Minimum çıxarış məbləği: <strong>3.50 qəpik</strong>
+                </p>
+                
+                <form id="withdrawForm">
+                    <div class="form-group">
+                        <label for="amount">Çıxarış Məbləği (Qəpik):</label>
+                        <input 
+                            type="number" 
+                            id="amount" 
+                            name="amount" 
+                            class="form-input" 
+                            placeholder="3.50"
+                            min="3.50"
+                            step="0.01"
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="method">Çıxarış Üsulu:</label>
+                        <select id="method" name="method" class="form-select" required>
+                            <option value="">Üsul seçin...</option>
+                            <option value="M10">M10 Wallet</option>
+                            <option value="Bank Card">Bank Kartı</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="accountDetails" id="accountLabel">Hesab Məlumatları:</label>
+                        <textarea 
+                            id="accountDetails" 
+                            name="accountDetails" 
+                            class="form-input" 
+                            placeholder="Hesab məlumatlarınızı daxil edin..."
+                            rows="4"
+                            required
+                        ></textarea>
+                    </div>
+                    
+                    <button type="submit" class="withdraw-btn">
+                        Çıxarış Sorğusu Göndər
+                    </button>
+                </form>
+            </div>
+
+            <!-- Ad Sidebar -->
+            <div class="ad-sidebar">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: #333;">Çıxarış Qaydaları</h3>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 10px 0; border-bottom: 1px solid #e0e0e0;">
+                            💰 Minimum çıxarış məbləği: <strong>3.50 qəpik</strong>
+                        </li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #e0e0e0;">
+                            🏦 Çıxarış üsulları: M10 Wallet və Bank Kartı
+                        </li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #e0e0e0;">
+                            ⏱️ Çıxarış sorğuları admin tərəfindən yoxlanılır
+                        </li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #e0e0e0;">
+                            ✅ Təsdiqlənmiş sorğular 24-48 saat ərzində ödənilir
+                        </li>
+                        <li style="padding: 10px 0;">
+                            📝 Düzgün hesab məlumatları daxil etdiyinizə əmin olun
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: #333;">Hesab Məlumatları Nümunələri</h3>
+                <div style="background: #e8f5e8; padding: 20px; border-radius: 10px;">
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #2e7d32; margin-bottom: 10px;">M10 Wallet üçün:</h4>
+                        <div style="background: white; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 14px;">
+                            M10 nömrəsi: +994XXXXXXXXX<br>
+                            Ad Soyad: Sizin adınız
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="color: #2e7d32; margin-bottom: 10px;">Bank Kartı üçün:</h4>
+                        <div style="background: white; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 14px;">
+                            Kart nömrəsi: 1234 5678 9012 3456<br>
+                            Ad Soyad: Sizin adınız<br>
+                            Bank adı: Bank adı
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="availableBalance">0.0000</div>
+                    <div class="stat-label">Çıxarış üçün əlçatan</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingWithdrawals">0</div>
+                    <div class="stat-label">Gözləyən sorğular</div>
+                </div>
+            </div>
+
+            <!-- Ad Banner Bottom -->
+            <div class="ad-banner">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="/" class="nav-item">
+                <div class="nav-icon home"></div>
+                <span>Ana Səhifə</span>
+            </a>
+            <a href="/earn.html" class="nav-item">
+                <div class="nav-icon earn"></div>
+                <span>Qazanc</span>
+            </a>
+            <a href="/rewards.html" class="nav-item">
+                <div class="nav-icon rewards"></div>
+                <span>Mükafatlar</span>
+            </a>
+            <a href="/withdraw.html" class="nav-item active">
+                <div class="nav-icon withdraw"></div>
+                <span>Çıxarış</span>
+            </a>
+            <a href="/stars.html" class="nav-item">
+                <div class="nav-icon stars"></div>
+                <span>Ulduzlar</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        let userData = null;
+
+        // Load user data
+        async function loadUserData() {
+            try {
+                const response = await fetch('/api/user');
+                if (response.ok) {
+                    userData = await response.json();
+                    updateUI();
+                } else {
+                    window.location.href = '/register.html';
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                window.location.href = '/register.html';
+            }
+        }
+
+        // Update UI with user data
+        function updateUI() {
+            if (userData) {
+                document.getElementById('balanceAmount').textContent = userData.balance;
+                document.getElementById('availableBalance').textContent = userData.balance;
+                
+                // Check if balance is sufficient for withdrawal
+                const balance = parseFloat(userData.balance);
+                const withdrawBtn = document.querySelector('.withdraw-btn');
+                const amountInput = document.getElementById('amount');
+                
+                if (balance < 3.50) {
+                    withdrawBtn.disabled = true;
+                    withdrawBtn.textContent = 'Balans kifayət deyil (Min: 3.50)';
+                    withdrawBtn.style.background = '#ccc';
+                    amountInput.max = balance.toFixed(4);
+                } else {
+                    amountInput.max = balance.toFixed(4);
+                }
+            }
+        }
+
+        // Update placeholder based on selected method
+        document.getElementById('method').addEventListener('change', (e) => {
+            const method = e.target.value;
+            const accountDetails = document.getElementById('accountDetails');
+            const accountLabel = document.getElementById('accountLabel');
+            
+            if (method === 'M10') {
+                accountLabel.textContent = 'M10 Wallet Məlumatları:';
+                accountDetails.placeholder = 'M10 nömrəsi: +994XXXXXXXXX\nAd Soyad: Sizin adınız';
+            } else if (method === 'Bank Card') {
+                accountLabel.textContent = 'Bank Kartı Məlumatları:';
+                accountDetails.placeholder = 'Kart nömrəsi: 1234 5678 9012 3456\nAd Soyad: Sizin adınız\nBank adı: Bank adı';
+            } else {
+                accountLabel.textContent = 'Hesab Məlumatları:';
+                accountDetails.placeholder = 'Hesab məlumatlarınızı daxil edin...';
+            }
+        });
+
+        // Withdraw form submission
+        document.getElementById('withdrawForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const amount = parseFloat(document.getElementById('amount').value);
+            const method = document.getElementById('method').value;
+            const accountDetails = document.getElementById('accountDetails').value.trim();
+            
+            // Validation
+            if (!amount || amount < 3.50) {
+                showMessage('Minimum çıxarış məbləği 3.50 qəpikdir', 'error');
+                return;
+            }
+            
+            if (!method) {
+                showMessage('Çıxarış üsulunu seçin', 'error');
+                return;
+            }
+            
+            if (!accountDetails) {
+                showMessage('Hesab məlumatlarını daxil edin', 'error');
+                return;
+            }
+            
+            if (userData && amount > parseFloat(userData.balance)) {
+                showMessage('Balansınız kifayət deyil', 'error');
+                return;
+            }
+            
+            const withdrawBtn = document.querySelector('.withdraw-btn');
+            withdrawBtn.disabled = true;
+            withdrawBtn.textContent = 'Göndərilir...';
+            
+            try {
+                const response = await fetch('/api/withdraw', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount: amount,
+                        method: method,
+                        accountDetails: accountDetails
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(data.message, 'success');
+                    
+                    // Reset form
+                    document.getElementById('withdrawForm').reset();
+                    
+                    // Update pending withdrawals count
+                    const currentPending = parseInt(document.getElementById('pendingWithdrawals').textContent);
+                    document.getElementById('pendingWithdrawals').textContent = currentPending + 1;
+                    
+                    // Refresh user data
+                    loadUserData();
+                } else {
+                    showMessage(data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('Çıxarış sorğusu göndərilərkən xəta baş verdi', 'error');
+            } finally {
+                withdrawBtn.disabled = false;
+                withdrawBtn.textContent = 'Çıxarış Sorğusu Göndər';
+            }
+        });
+
+        // Show message function
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserData();
+        });
+    </script>
+</body>
+</html>
