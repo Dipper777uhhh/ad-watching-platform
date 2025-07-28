@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Ad Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="admin-panel">
+        <div class="admin-header">
+            <h1>🔐 Admin Panel</h1>
+            <p>Ad Platform İdarəetmə Paneli</p>
+        </div>
+
+        <div id="message" class="message hidden"></div>
+
+        <!-- Platform Statistics -->
+        <div class="admin-stats">
+            <div class="admin-card">
+                <h3>👥 Ümumi İstifadəçilər</h3>
+                <div style="font-size: 32px; font-weight: bold; color: #4facfe;" id="totalUsers">0</div>
+            </div>
+            <div class="admin-card">
+                <h3>📺 Ümumi Reklam Baxışları</h3>
+                <div style="font-size: 32px; font-weight: bold; color: #2ed573;" id="totalAdViews">0</div>
+            </div>
+            <div class="admin-card">
+                <h3>💰 Ümumi Balans</h3>
+                <div style="font-size: 32px; font-weight: bold; color: #ffa726;" id="totalBalance">0.0000</div>
+            </div>
+            <div class="admin-card">
+                <h3>⏳ Gözləyən Çıxarışlar</h3>
+                <div style="font-size: 32px; font-weight: bold; color: #ff6b6b;" id="pendingWithdrawals">0</div>
+            </div>
+        </div>
+
+        <!-- Promo Code Statistics -->
+        <div class="admin-card" style="margin-bottom: 30px;">
+            <h3>🎁 Promo Kod Statistikaları</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center;">
+                <div>
+                    <div style="font-size: 24px; font-weight: bold; color: #667eea;" id="totalCodes">50</div>
+                    <div style="color: #666;">Ümumi Kodlar</div>
+                </div>
+                <div>
+                    <div style="font-size: 24px; font-weight: bold; color: #2ed573;" id="usedCodes">0</div>
+                    <div style="color: #666;">İstifadə Edilən</div>
+                </div>
+                <div>
+                    <div style="font-size: 24px; font-weight: bold; color: #ffa726;" id="unusedCodes">50</div>
+                    <div style="color: #666;">İstifadə Edilməyən</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Management -->
+        <div class="admin-card" style="margin-bottom: 30px;">
+            <h3>👥 İstifadəçi İdarəetməsi</h3>
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Doğum Tarixi</th>
+                            <th>Balans</th>
+                            <th>Bu gün reklamlar</th>
+                            <th>Qeydiyyat Tarixi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTable">
+                        <tr>
+                            <td colspan="5" class="loading">Yüklənir...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Withdrawal Management -->
+        <div class="admin-card" style="margin-bottom: 30px;">
+            <h3>💸 Çıxarış İdarəetməsi</h3>
+            <div style="overflow-x: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>İstifadəçi</th>
+                            <th>Məbləğ</th>
+                            <th>Üsul</th>
+                            <th>Hesab Məlumatları</th>
+                            <th>Status</th>
+                            <th>Tarix</th>
+                            <th>Əməliyyatlar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="withdrawalsTable">
+                        <tr>
+                            <td colspan="8" class="loading">Yüklənir...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 50 Promo Codes -->
+        <div class="admin-card">
+            <h3>🎫 50 Promo Kod (Kanalda Paylaşmaq üçün)</h3>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; max-height: 400px; overflow-y: auto;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-family: monospace; font-size: 14px;">
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">EARN2024A1B2C3</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">BONUS5X7Y9Z4K6</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">REWARD8M3N7P2Q5</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">GIFT1L4R8T9W2E</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">LUCKY3F6H9J1K4</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">MONEY7S2D5G8H0</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">COINS9Q3W6E8R1</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">PRIZE4T7Y2U5I8</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">CASH6R9T1Y4U7I</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">GOLD2E5R8T1Y4U</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">SILVER3W6E9R2T5</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">BRONZE7Y1U4I8O0</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">DIAMOND5T8Y2U6I9</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">RUBY3R7T1Y5U8I</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">EMERALD9E2R6T0Y4</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">SAPPHIRE1Y5U8I2O6</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">PEARL4U7I1O5P9S</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">CRYSTAL6I0O4P8S2D</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">TREASURE8O3P7S1D5F</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">FORTUNE1P6S0D4F8G2</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">WEALTH3S8D2F6G0H4</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">RICHES5D1F5G9H3J7</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">JACKPOT7F4G8H2J6K0</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">WINNER9G7H1J5K9L3</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">CHAMPION2H0J4K8L2Z6</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">VICTORY4J3K7L1Z5X9</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">SUCCESS6K6L0Z4X8C2</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">TRIUMPH8L9Z3X7C1V5</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">ACHIEVE0Z2X6C0V4B8</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">PROSPER2X5C9V3B7N1</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">THRIVE4C8V2B6N0M4</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">FLOURISH6V1B5N9M3Q7</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">ADVANCE8B4N8M2Q6W0</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">PROGRESS0N7M1Q5W9E3</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">DEVELOP2M0Q4W8E2R6</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">IMPROVE4Q3W7E1R5T9</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">ENHANCE6W6E0R4T8Y2</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">UPGRADE8E9R3T7Y1U5</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">BOOST0R2T6Y0U4I8O</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">ELEVATE2T5Y9U3I7O1</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">MAXIMIZE4Y8U2I6O0P4</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">OPTIMIZE6U1I5O9P3A7</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">AMPLIFY8I4O8P2A6S0</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">MULTIPLY0O7P1A5S9D3</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">INCREASE2P0A4S8D2F6</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">EXPAND4A3S7D1F5G9H</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">EXTEND6S6D0F4G8H2J</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">STRETCH8D9F3G7H1J5K</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">BROADEN0F2G6H0J4K8L</div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; text-align: center; border: 2px solid #4facfe;">WIDEN2G5H9J3K7L1Z5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const adminKey = 'admin-secret-2024';
+
+        // Load platform statistics
+        async function loadStats() {
+            try {
+                const response = await fetch(`/api/admin/stats?key=${adminKey}`);
+                if (response.ok) {
+                    const stats = await response.json();
+                    
+                    document.getElementById('totalUsers').textContent = stats.total_users || 0;
+                    document.getElementById('totalAdViews').textContent = stats.total_ad_views || 0;
+                    document.getElementById('totalBalance').textContent = parseFloat(stats.total_balance || 0).toFixed(4);
+                    document.getElementById('pendingWithdrawals').textContent = stats.pending_withdrawals || 0;
+                    
+                    document.getElementById('totalCodes').textContent = stats.total_codes || 50;
+                    document.getElementById('usedCodes').textContent = stats.used_codes || 0;
+                    document.getElementById('unusedCodes').textContent = stats.unused_codes || 50;
+                } else {
+                    showMessage('Statistikalar yüklənə bilmədi', 'error');
+                }
+            } catch (error) {
+                showMessage('Statistikalar yüklənərkən xəta baş verdi', 'error');
+            }
+        }
+
+        // Load users
+        async function loadUsers() {
+            try {
+                const response = await fetch(`/api/admin/users?key=${adminKey}`);
+                if (response.ok) {
+                    const users = await response.json();
+                    const tbody = document.getElementById('usersTable');
+                    
+                    if (users.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #666;">Hələ istifadəçi yoxdur</td></tr>';
+                        return;
+                    }
+                    
+                    tbody.innerHTML = users.map(user => `
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${new Date(user.birth_date).toLocaleDateString('az-AZ')}</td>
+                            <td>${parseFloat(user.balance).toFixed(4)} qəpik</td>
+                            <td>${user.ads_watched_today || 0}</td>
+                            <td>${new Date(user.registration_date).toLocaleDateString('az-AZ')}</td>
+                        </tr>
+                    `).join('');
+                } else {
+                    showMessage('İstifadəçilər yüklənə bilmədi', 'error');
+                }
+            } catch (error) {
+                showMessage('İstifadəçilər yüklənərkən xəta baş verdi', 'error');
+            }
+        }
+
+        // Load withdrawals
+        async function loadWithdrawals() {
+            try {
+                const response = await fetch(`/api/admin/withdrawals?key=${adminKey}`);
+                if (response.ok) {
+                    const withdrawals = await response.json();
+                    const tbody = document.getElementById('withdrawalsTable');
+                    
+                    if (withdrawals.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #666;">Hələ çıxarış sorğusu yoxdur</td></tr>';
+                        return;
+                    }
+                    
+                    tbody.innerHTML = withdrawals.map(withdrawal => `
+                        <tr>
+                            <td>${withdrawal.id}</td>
+                            <td>ID: ${withdrawal.user_id}<br><small>${new Date(withdrawal.birth_date).toLocaleDateString('az-AZ')}</small></td>
+                            <td>${parseFloat(withdrawal.amount).toFixed(4)} qəpik</td>
+                            <td>${withdrawal.method}</td>
+                            <td style="max-width: 200px; word-wrap: break-word; font-size: 12px;">${withdrawal.account_details}</td>
+                            <td>
+                                <span class="status-${withdrawal.status}">${getStatusText(withdrawal.status)}</span>
+                            </td>
+                            <td>${new Date(withdrawal.request_date).toLocaleDateString('az-AZ')}</td>
+                            <td>
+                                ${withdrawal.status === 'pending' ? `
+                                    <button class="status-btn approve" onclick="updateWithdrawalStatus(${withdrawal.id}, 'approved')">Təsdiqlə</button>
+                                    <button class="status-btn reject" onclick="updateWithdrawalStatus(${withdrawal.id}, 'rejected')">Rədd Et</button>
+                                ` : '-'}
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    showMessage('Çıxarışlar yüklənə bilmədi', 'error');
+                }
+            } catch (error) {
+                showMessage('Çıxarışlar yüklənərkən xəta baş verdi', 'error');
+            }
+        }
+
+        // Update withdrawal status
+        async function updateWithdrawalStatus(withdrawalId, status) {
+            try {
+                const response = await fetch(`/api/admin/withdrawal/${withdrawalId}/status?key=${adminKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ status })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage(`Çıxarış sorğusu ${status === 'approved' ? 'təsdiqləndi' : 'rədd edildi'}`, 'success');
+                    loadWithdrawals(); // Refresh withdrawals
+                    loadStats(); // Refresh stats
+                } else {
+                    showMessage(data.error, 'error');
+                }
+            } catch (error) {
+                showMessage('Status yenilənərkən xəta baş verdi', 'error');
+            }
+        }
+
+        // Get status text in Azerbaijani
+        function getStatusText(status) {
+            switch (status) {
+                case 'pending': return 'Gözləyir';
+                case 'approved': return 'Təsdiqləndi';
+                case 'rejected': return 'Rədd Edildi';
+                default: return status;
+            }
+        }
+
+        // Show message function
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Auto refresh data every 30 seconds
+        function startAutoRefresh() {
+            setInterval(() => {
+                loadStats();
+                loadUsers();
+                loadWithdrawals();
+            }, 30000);
+        }
+
+        // Initialize admin panel
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if admin key is in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('key') !== adminKey) {
+                document.body.innerHTML = '<div style="text-align: center; padding: 50px; font-size: 24px; color: #ff6b6b;">🔒 Unauthorized Access</div>';
+                return;
+            }
+            
+            loadStats();
+            loadUsers();
+            loadWithdrawals();
+            startAutoRefresh();
+        });
+    </script>
+</body>
+</html>
