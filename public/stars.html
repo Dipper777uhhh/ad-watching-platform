@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulduzlar - Ad Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Ulduzlar</h1>
+            <div class="balance-display">
+                <div class="balance-amount" id="balanceAmount">0.0000</div>
+                <div class="balance-label">Balans (Qəpik)</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="message" class="message hidden"></div>
+
+            <!-- Ad Banner Top -->
+            <div class="ad-banner">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="adsWatchedToday">0</div>
+                    <div class="stat-label">Bu gün baxılan reklamlar</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalAdsWatched">0</div>
+                    <div class="stat-label">Ümumi baxılan reklamlar</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: #333;">Reklam Baxış Tarixçəsi</h3>
+                <div id="adHistory" class="loading">
+                    Yüklənir...
+                </div>
+            </div>
+
+            <!-- Ad Sidebar -->
+            <div class="ad-sidebar">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: #333;">Ulduz Sistemi</h3>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 48px; margin-bottom: 10px;" id="starDisplay">⭐</div>
+                        <div style="font-size: 18px; font-weight: bold; color: #333;" id="starLevel">Başlanğıc Səviyyə</div>
+                    </div>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>Tərəqqi:</span>
+                            <span id="progressText">0/10</span>
+                        </div>
+                        <div style="background: #e0e0e0; height: 10px; border-radius: 5px; margin-top: 10px; overflow: hidden;">
+                            <div id="progressBar" style="background: linear-gradient(90deg, #ffd700, #ffed4e); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="font-size: 14px; color: #666;">
+                        <p><strong>Səviyyələr:</strong></p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>⭐ Başlanğıc (0-9 reklam)</li>
+                            <li>🌟 Aktiv (10-49 reklam)</li>
+                            <li>✨ Mütəxəssis (50-99 reklam)</li>
+                            <li>💫 Usta (100-249 reklam)</li>
+                            <li>🌠 Çempion (250+ reklam)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: #333;">Günlük Statistikalar</h3>
+                <div id="dailyStats" style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center;">
+                        <div>
+                            <div style="font-size: 24px; font-weight: bold; color: #4facfe;" id="todayEarnings">0.0000</div>
+                            <div style="font-size: 12px; color: #666;">Bu gün qazanc</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 24px; font-weight: bold; color: #2ed573;" id="todayAds">0</div>
+                            <div style="font-size: 12px; color: #666;">Bu gün reklamlar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ad Banner Bottom -->
+            <div class="ad-banner">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="/" class="nav-item">
+                <div class="nav-icon home"></div>
+                <span>Ana Səhifə</span>
+            </a>
+            <a href="/earn.html" class="nav-item">
+                <div class="nav-icon earn"></div>
+                <span>Qazanc</span>
+            </a>
+            <a href="/rewards.html" class="nav-item">
+                <div class="nav-icon rewards"></div>
+                <span>Mükafatlar</span>
+            </a>
+            <a href="/withdraw.html" class="nav-item">
+                <div class="nav-icon withdraw"></div>
+                <span>Çıxarış</span>
+            </a>
+            <a href="/stars.html" class="nav-item active">
+                <div class="nav-icon stars"></div>
+                <span>Ulduzlar</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        let userData = null;
+
+        // Load user data
+        async function loadUserData() {
+            try {
+                const response = await fetch('/api/user');
+                if (response.ok) {
+                    userData = await response.json();
+                    updateUI();
+                    generateAdHistory();
+                    updateStarLevel();
+                } else {
+                    window.location.href = '/register.html';
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                window.location.href = '/register.html';
+            }
+        }
+
+        // Update UI with user data
+        function updateUI() {
+            if (userData) {
+                document.getElementById('balanceAmount').textContent = userData.balance;
+                document.getElementById('adsWatchedToday').textContent = userData.adsWatchedToday || 0;
+                
+                // Calculate total ads watched (estimate based on balance)
+                const totalAds = Math.floor(parseFloat(userData.balance) / 0.0007);
+                document.getElementById('totalAdsWatched').textContent = totalAds;
+                
+                // Update daily stats
+                const todayEarnings = (userData.adsWatchedToday || 0) * 0.0007;
+                document.getElementById('todayEarnings').textContent = todayEarnings.toFixed(4);
+                document.getElementById('todayAds').textContent = userData.adsWatchedToday || 0;
+            }
+        }
+
+        // Generate ad history (simulated)
+        function generateAdHistory() {
+            const historyDiv = document.getElementById('adHistory');
+            const adsWatched = userData.adsWatchedToday || 0;
+            
+            if (adsWatched === 0) {
+                historyDiv.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: #666;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">📺</div>
+                        <h4 style="margin-bottom: 10px;">Hələ reklam baxmamısınız</h4>
+                        <p>Reklam baxaraq qəpik qazanmağa başlayın!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let historyHTML = '<div style="max-height: 300px; overflow-y: auto;">';
+            
+            for (let i = 0; i < adsWatched; i++) {
+                const time = new Date();
+                time.setMinutes(time.getMinutes() - (i * 5)); // 5 minutes apart
+                
+                historyHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #e0e0e0; background: ${i % 2 === 0 ? '#f9f9f9' : 'white'};">
+                        <div>
+                            <div style="font-weight: bold; color: #333;">Reklam #${adsWatched - i}</div>
+                            <div style="font-size: 12px; color: #666;">${time.toLocaleTimeString('az-AZ')}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: bold; color: #2ed573;">+0.0007</div>
+                            <div style="font-size: 12px; color: #666;">qəpik</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            historyHTML += '</div>';
+            historyDiv.innerHTML = historyHTML;
+        }
+
+        // Update star level based on total ads watched
+        function updateStarLevel() {
+            const totalAds = Math.floor(parseFloat(userData.balance) / 0.0007);
+            let level, star, progress, nextLevel;
+            
+            if (totalAds < 10) {
+                level = 'Başlanğıc Səviyyə';
+                star = '⭐';
+                progress = totalAds;
+                nextLevel = 10;
+            } else if (totalAds < 50) {
+                level = 'Aktiv İstifadəçi';
+                star = '🌟';
+                progress = totalAds - 10;
+                nextLevel = 40;
+            } else if (totalAds < 100) {
+                level = 'Mütəxəssis';
+                star = '✨';
+                progress = totalAds - 50;
+                nextLevel = 50;
+            } else if (totalAds < 250) {
+                level = 'Usta';
+                star = '💫';
+                progress = totalAds - 100;
+                nextLevel = 150;
+            } else {
+                level = 'Çempion';
+                star = '🌠';
+                progress = nextLevel = 1; // Max level
+            }
+            
+            document.getElementById('starDisplay').textContent = star;
+            document.getElementById('starLevel').textContent = level;
+            document.getElementById('progressText').textContent = `${progress}/${nextLevel}`;
+            
+            const progressPercent = (progress / nextLevel) * 100;
+            document.getElementById('progressBar').style.width = `${Math.min(progressPercent, 100)}%`;
+        }
+
+        // Show message function
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserData();
+        });
+    </script>
+</body>
+</html>
