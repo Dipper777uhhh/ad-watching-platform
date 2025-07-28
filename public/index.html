@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Səhifə - Ad Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Ad Platform</h1>
+            <div class="balance-display">
+                <div class="balance-amount" id="balanceAmount">0.0000</div>
+                <div class="balance-label">Balans (Qəpik)</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="message" class="message hidden"></div>
+
+            <!-- Ad Banner Top -->
+            <div class="ad-banner">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+                <script async="async" data-cfasync="false" src="//pl26899089.profitableratecpm.com/1df5b11923b54b495d2487bf1f148372/invoke.js"></script>
+                <div id="container-1df5b11923b54b495d2487bf1f148372"></div>
+            </div>
+
+            <div class="card watch-ad-section">
+                <h3 style="margin-bottom: 20px; text-align: center; color: #333;">Reklam Bax və Qəpik Qazan</h3>
+                <button id="watchAdBtn" class="watch-ad-btn">
+                    Reklam Bax (+0.0007 Qəpik)
+                </button>
+                <p style="text-align: center; margin-top: 15px; color: #666; font-size: 14px;">
+                    Hər reklam üçün 0.0007 qəpik qazanın
+                </p>
+            </div>
+
+            <!-- Ad Sidebar -->
+            <div class="ad-sidebar">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+                <script async="async" data-cfasync="false" src="//pl26899089.profitableratecpm.com/1df5b11923b54b495d2487bf1f148372/invoke.js"></script>
+                <div id="container-1df5b11923b54b495d2487bf1f148372"></div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="adsWatched">0</div>
+                    <div class="stat-label">Bu gün baxılan reklamlar</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalEarned">0.0000</div>
+                    <div class="stat-label">Ümumi qazanc</div>
+                </div>
+            </div>
+
+            <!-- Ad Banner Bottom -->
+            <div class="ad-banner">
+                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
+                <script async="async" data-cfasync="false" src="//pl26899089.profitableratecpm.com/1df5b11923b54b495d2487bf1f148372/invoke.js"></script>
+                <div id="container-1df5b11923b54b495d2487bf1f148372"></div>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="/" class="nav-item active">
+                <div class="nav-icon home"></div>
+                <span>Ana Səhifə</span>
+            </a>
+            <a href="/earn.html" class="nav-item">
+                <div class="nav-icon earn"></div>
+                <span>Qazanc</span>
+            </a>
+            <a href="/rewards.html" class="nav-item">
+                <div class="nav-icon rewards"></div>
+                <span>Mükafatlar</span>
+            </a>
+            <a href="/withdraw.html" class="nav-item">
+                <div class="nav-icon withdraw"></div>
+                <span>Çıxarış</span>
+            </a>
+            <a href="/stars.html" class="nav-item">
+                <div class="nav-icon stars"></div>
+                <span>Ulduzlar</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        let userData = null;
+        let adWatchCooldown = false;
+
+        // Load user data
+        async function loadUserData() {
+            try {
+                const response = await fetch('/api/user');
+                if (response.ok) {
+                    userData = await response.json();
+                    updateUI();
+                } else {
+                    window.location.href = '/register.html';
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                window.location.href = '/register.html';
+            }
+        }
+
+        // Update UI with user data
+        function updateUI() {
+            if (userData) {
+                document.getElementById('balanceAmount').textContent = userData.balance;
+                document.getElementById('adsWatched').textContent = userData.adsWatchedToday || 0;
+                document.getElementById('totalEarned').textContent = userData.balance;
+            }
+        }
+
+        // Watch ad functionality
+        document.getElementById('watchAdBtn').addEventListener('click', async () => {
+            if (adWatchCooldown) {
+                showMessage('Çox tez reklam baxırsınız. Bir dəqiqə gözləyin.', 'error');
+                return;
+            }
+
+            // Open ad in new window
+            const adWindow = window.open('https://www.profitableratecpm.com/tr68qctewa?key=1b55d1aca1c2d9e8811e5756abe60019', '_blank');
+            
+            // Disable button temporarily
+            const btn = document.getElementById('watchAdBtn');
+            btn.disabled = true;
+            btn.textContent = 'Reklam açılır...';
+            
+            // Wait a bit then record the ad view
+            setTimeout(async () => {
+                try {
+                    const response = await fetch('/api/watch-ad', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        showMessage(`${data.message} +${data.earned} qəpik`, 'success');
+                        loadUserData(); // Refresh user data
+                        
+                        // Set cooldown
+                        adWatchCooldown = true;
+                        let countdown = 60;
+                        
+                        const updateButton = () => {
+                            btn.textContent = `Gözləyin (${countdown}s)`;
+                            countdown--;
+                            
+                            if (countdown < 0) {
+                                adWatchCooldown = false;
+                                btn.disabled = false;
+                                btn.textContent = 'Reklam Bax (+0.0007 Qəpik)';
+                            } else {
+                                setTimeout(updateButton, 1000);
+                            }
+                        };
+                        
+                        updateButton();
+                    } else {
+                        showMessage(data.error, 'error');
+                        btn.disabled = false;
+                        btn.textContent = 'Reklam Bax (+0.0007 Qəpik)';
+                    }
+                } catch (error) {
+                    showMessage('Reklam baxış zamanı xəta baş verdi', 'error');
+                    btn.disabled = false;
+                    btn.textContent = 'Reklam Bax (+0.0007 Qəpik)';
+                }
+            }, 3000); // Wait 3 seconds before recording
+        });
+
+        // Show message function
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Update active nav item
+        function updateActiveNav() {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '/' && window.location.pathname === '/') {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserData();
+            updateActiveNav();
+        });
+    </script>
+</body>
+</html>
