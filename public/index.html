@@ -3,208 +3,522 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ana Səhifə - Ad Platform</title>
+    <title>Diyet Proqramı - Sağlıqlı Həyat</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Ad Platform</h1>
-            <div class="balance-display">
-                <div class="balance-amount" id="balanceAmount">0.0000</div>
-                <div class="balance-label">Balans (Qəpik)</div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">
+                <i class="fas fa-apple-alt"></i>
+                Diyet Proqramı
+            </h1>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#dashboard" class="nav-link active" data-page="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Ana Səhifə</span>
+                </a>
+                <a href="#meals" class="nav-link" data-page="meals">
+                    <i class="fas fa-utensils"></i>
+                    <span>Yemeklər</span>
+                </a>
+                <a href="#progress" class="nav-link" data-page="progress">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Tərəqqi</span>
+                </a>
+                <a href="#diet-plans" class="nav-link" data-page="diet-plans">
+                    <i class="fas fa-list-alt"></i>
+                    <span>Diyet Planları</span>
+                </a>
+                <a href="#profile" class="nav-link" data-page="profile">
+                    <i class="fas fa-user"></i>
+                    <span>Profil</span>
+                </a>
             </div>
-        </div>
-
-        <div class="content">
-            <div id="message" class="message hidden"></div>
-
-            <!-- Ad Banner Top -->
-            <div class="ad-banner">
-                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
-                <script async="async" data-cfasync="false" src="//pl26899089.profitableratecpm.com/1df5b11923b54b495d2487bf1f148372/invoke.js"></script>
-                <div id="container-1df5b11923b54b495d2487bf1f148372"></div>
-            </div>
-
-            <div class="card watch-ad-section">
-                <h3 style="margin-bottom: 20px; text-align: center; color: #333;">Reklam Bax və Qəpik Qazan</h3>
-                <button id="watchAdBtn" class="watch-ad-btn">
-                    Reklam Bax (+0.0007 Qəpik)
+            <div class="nav-actions">
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Çıxış
                 </button>
-                <p style="text-align: center; margin-top: 15px; color: #666; font-size: 14px;">
-                    Hər reklam üçün 0.0007 qəpik qazanın
-                </p>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Page -->
+        <div id="dashboard" class="page active">
+            <div class="page-header">
+                <h2>Ana Səhifə</h2>
+                <p class="welcome-msg">Xoş gəldiniz! <span id="user-name"></span></p>
             </div>
 
-            <!-- Ad Sidebar -->
-            <div class="ad-sidebar">
-                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
-                <script async="async" data-cfasync="false" src="//pl26899089.profitableratecpm.com/1df5b11923b54b495d2487bf1f148372/invoke.js"></script>
-                <div id="container-1df5b11923b54b495d2487bf1f148372"></div>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number" id="adsWatched">0</div>
-                    <div class="stat-label">Bu gün baxılan reklamlar</div>
+            <!-- Today's Summary -->
+            <div class="summary-cards">
+                <div class="summary-card calories">
+                    <div class="card-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Bugünkü Kaloriler</h3>
+                        <div class="value">
+                            <span id="calories-consumed">0</span> / <span id="calories-goal">2000</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="calories-progress"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="totalEarned">0.0000</div>
-                    <div class="stat-label">Ümumi qazanc</div>
+
+                <div class="summary-card protein">
+                    <div class="card-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Protein</h3>
+                        <div class="value"><span id="protein-consumed">0</span>g</div>
+                    </div>
+                </div>
+
+                <div class="summary-card carbs">
+                    <div class="card-icon">
+                        <i class="fas fa-bread-slice"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Karbohidrat</h3>
+                        <div class="value"><span id="carbs-consumed">0</span>g</div>
+                    </div>
+                </div>
+
+                <div class="summary-card fat">
+                    <div class="card-icon">
+                        <i class="fas fa-droplet"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>Yağ</h3>
+                        <div class="value"><span id="fat-consumed">0</span>g</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Ad Banner Bottom -->
-            <div class="ad-banner">
-                <script type='text/javascript' src='//pl26899343.profitableratecpm.com/0c/cb/90/0ccb90d75e46e2c8545e356b9e5a65ea.js'></script>
-                <script async="async" data-cfasync="false" src="//pl26899089.profitableratecpm.com/1df5b11923b54b495d2487bf1f148372/invoke.js"></script>
-                <div id="container-1df5b11923b54b495d2487bf1f148372"></div>
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button class="action-btn primary" onclick="showPage('meals')">
+                    <i class="fas fa-plus"></i>
+                    Yemək Əlavə Et
+                </button>
+                <button class="action-btn secondary" onclick="showAddProgressModal()">
+                    <i class="fas fa-weight"></i>
+                    Çəki Qeyd Et
+                </button>
+                <button class="action-btn secondary" onclick="showPage('diet-plans')">
+                    <i class="fas fa-list"></i>
+                    Diyet Planları
+                </button>
+            </div>
+
+            <!-- Recent Meals -->
+            <div class="section">
+                <div class="section-header">
+                    <h3>Bugünkü Yemeklər</h3>
+                    <button class="btn-link" onclick="showPage('meals')">Hamısına Bax</button>
+                </div>
+                <div id="recent-meals" class="meals-list">
+                    <!-- Meals will be loaded here -->
+                </div>
             </div>
         </div>
 
-        <nav class="bottom-nav">
-            <a href="/" class="nav-item active">
-                <div class="nav-icon home"></div>
-                <span>Ana Səhifə</span>
-            </a>
-            <a href="/earn.html" class="nav-item">
-                <div class="nav-icon earn"></div>
-                <span>Qazanc</span>
-            </a>
-            <a href="/rewards.html" class="nav-item">
-                <div class="nav-icon rewards"></div>
-                <span>Mükafatlar</span>
-            </a>
-            <a href="/withdraw.html" class="nav-item">
-                <div class="nav-icon withdraw"></div>
-                <span>Çıxarış</span>
-            </a>
-            <a href="/stars.html" class="nav-item">
-                <div class="nav-icon stars"></div>
-                <span>Ulduzlar</span>
-            </a>
-        </nav>
+        <!-- Meals Page -->
+        <div id="meals" class="page">
+            <div class="page-header">
+                <h2>Yemək Qeydiyyatı</h2>
+                <button class="btn-primary" onclick="showAddMealModal()">
+                    <i class="fas fa-plus"></i>
+                    Yemək Əlavə Et
+                </button>
+            </div>
+
+            <!-- Meal Date Filter -->
+            <div class="filters">
+                <input type="date" id="meal-date-filter" class="date-input" onchange="loadMeals()">
+            </div>
+
+            <!-- Meals by Type -->
+            <div class="meals-container">
+                <div class="meal-section">
+                    <h3><i class="fas fa-sun"></i> Səhər Yeməyi</h3>
+                    <div id="breakfast-meals" class="meal-items">
+                        <div class="empty-state">
+                            <p>Hələ ki səhər yeməyi əlavə olunmayıb</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="meal-section">
+                    <h3><i class="fas fa-sun"></i> Nahar</h3>
+                    <div id="lunch-meals" class="meal-items">
+                        <div class="empty-state">
+                            <p>Hələ ki nahar əlavə olunmayıb</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="meal-section">
+                    <h3><i class="fas fa-moon"></i> Axşam Yeməyi</h3>
+                    <div id="dinner-meals" class="meal-items">
+                        <div class="empty-state">
+                            <p>Hələ ki axşam yeməyi əlavə olunmayıb</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="meal-section">
+                    <h3><i class="fas fa-cookie-bite"></i> Qəlyanaltı</h3>
+                    <div id="snack-meals" class="meal-items">
+                        <div class="empty-state">
+                            <p>Hələ ki qəlyanaltı əlavə olunmayıb</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Page -->
+        <div id="progress" class="page">
+            <div class="page-header">
+                <h2>Tərəqqi İzləmə</h2>
+                <button class="btn-primary" onclick="showAddProgressModal()">
+                    <i class="fas fa-plus"></i>
+                    Tərəqqi Əlavə Et
+                </button>
+            </div>
+
+            <!-- Weight Chart -->
+            <div class="chart-container">
+                <h3>Çəki Dəyişikliyi</h3>
+                <canvas id="weight-chart"></canvas>
+            </div>
+
+            <!-- Progress Stats -->
+            <div class="progress-stats">
+                <div class="stat-card">
+                    <h4>Cari Çəki</h4>
+                    <span id="current-weight">-- kg</span>
+                </div>
+                <div class="stat-card">
+                    <h4>Məqsəd Çəki</h4>
+                    <span id="target-weight">-- kg</span>
+                </div>
+                <div class="stat-card">
+                    <h4>Dəyişiklik</h4>
+                    <span id="weight-change">-- kg</span>
+                </div>
+            </div>
+
+            <!-- Progress History -->
+            <div class="section">
+                <h3>Tərəqqi Tarixçəsi</h3>
+                <div id="progress-history" class="progress-list">
+                    <!-- Progress entries will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Diet Plans Page -->
+        <div id="diet-plans" class="page">
+            <div class="page-header">
+                <h2>Diyet Planları</h2>
+            </div>
+
+            <div id="diet-plans-list" class="diet-plans-grid">
+                <!-- Diet plans will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profile" class="page">
+            <div class="page-header">
+                <h2>Profil Ayarları</h2>
+            </div>
+
+            <form id="profile-form" class="profile-form">
+                <div class="form-section">
+                    <h3>Şəxsi Məlumatlar</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ad</label>
+                            <input type="text" id="profile-first-name" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Soyad</label>
+                            <input type="text" id="profile-last-name" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>E-poçt</label>
+                            <input type="email" id="profile-email" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Doğum Tarixi</label>
+                            <input type="date" id="profile-birth-date" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Fiziki Məlumatlar</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Boy (sm)</label>
+                            <input type="number" id="profile-height" step="0.1" min="100" max="250">
+                        </div>
+                        <div class="form-group">
+                            <label>Çəki (kq)</label>
+                            <input type="number" id="profile-weight" step="0.1" min="30" max="300">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Hərəkət Səviyyəsi</label>
+                            <select id="profile-activity-level">
+                                <option value="sedentary">Az hərəkətli</option>
+                                <option value="light">Yüngül hərəkətli</option>
+                                <option value="moderate">Orta hərəkətli</option>
+                                <option value="active">Aktiv</option>
+                                <option value="very_active">Çox aktiv</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Məqsəd</label>
+                            <select id="profile-goal">
+                                <option value="lose_weight">Çəki itkisi</option>
+                                <option value="maintain">Çəki saxlama</option>
+                                <option value="gain_weight">Çəki artırma</option>
+                                <option value="muscle_gain">Əzələ qazanma</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Məqsəd Çəki (kq)</label>
+                        <input type="number" id="profile-target-weight" step="0.1" min="30" max="300">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-save"></i>
+                    Yadda Saxla
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Authentication Modal -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Giriş</button>
+                <button class="auth-tab" data-tab="register">Qeydiyyat</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form active">
+                <h2>Giriş</h2>
+                <div class="form-group">
+                    <label>İstifadəçi adı və ya E-poçt</label>
+                    <input type="text" id="login-username" required>
+                </div>
+                <div class="form-group">
+                    <label>Şifrə</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Giriş</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="auth-form">
+                <h2>Qeydiyyat</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ad</label>
+                        <input type="text" id="register-first-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Soyad</label>
+                        <input type="text" id="register-last-name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>İstifadəçi adı</label>
+                    <input type="text" id="register-username" required>
+                </div>
+                <div class="form-group">
+                    <label>E-poçt</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Şifrə</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Doğum Tarixi</label>
+                        <input type="date" id="register-birth-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cins</label>
+                        <select id="register-gender" required>
+                            <option value="">Seçin</option>
+                            <option value="male">Kişi</option>
+                            <option value="female">Qadın</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Boy (sm)</label>
+                        <input type="number" id="register-height" step="0.1" min="100" max="250" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Çəki (kq)</label>
+                        <input type="number" id="register-weight" step="0.1" min="30" max="300" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Hərəkət Səviyyəsi</label>
+                    <select id="register-activity-level" required>
+                        <option value="">Seçin</option>
+                        <option value="sedentary">Az hərəkətli</option>
+                        <option value="light">Yüngül hərəkətli</option>
+                        <option value="moderate">Orta hərəkətli</option>
+                        <option value="active">Aktiv</option>
+                        <option value="very_active">Çox aktiv</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Məqsəd</label>
+                        <select id="register-goal" required>
+                            <option value="">Seçin</option>
+                            <option value="lose_weight">Çəki itkisi</option>
+                            <option value="maintain">Çəki saxlama</option>
+                            <option value="gain_weight">Çəki artırma</option>
+                            <option value="muscle_gain">Əzələ qazanma</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Məqsəd Çəki (kq)</label>
+                        <input type="number" id="register-target-weight" step="0.1" min="30" max="300" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Qeydiyyat</button>
+            </form>
+        </div>
     </div>
 
-    <script>
-        let userData = null;
-        let adWatchCooldown = false;
+    <!-- Add Meal Modal -->
+    <div id="add-meal-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Yemək Əlavə Et</h3>
+                <button class="modal-close" onclick="closeModal('add-meal-modal')">&times;</button>
+            </div>
+            <form id="add-meal-form">
+                <div class="form-group">
+                    <label>Yemək Növü</label>
+                    <select id="meal-type" required>
+                        <option value="breakfast">Səhər Yeməyi</option>
+                        <option value="lunch">Nahar</option>
+                        <option value="dinner">Axşam Yeməyi</option>
+                        <option value="snack">Qəlyanaltı</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tarix</label>
+                    <input type="date" id="meal-date" required>
+                </div>
+                
+                <div class="food-search">
+                    <div class="search-controls">
+                        <input type="text" id="food-search" placeholder="Qida axtar...">
+                        <select id="food-category">
+                            <option value="">Bütün kateqoriyalar</option>
+                        </select>
+                    </div>
+                    <div id="food-results" class="food-list">
+                        <!-- Food search results -->
+                    </div>
+                </div>
+                
+                <div class="selected-foods">
+                    <h4>Seçilmiş Qidalar</h4>
+                    <div id="selected-foods-list">
+                        <div class="empty-state">
+                            <p>Hələ ki heç bir qida seçilməyib</p>
+                        </div>
+                    </div>
+                    <div class="meal-totals">
+                        <div class="total-item">
+                            <span>Ümumi Kalori:</span>
+                            <span id="meal-total-calories">0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('add-meal-modal')">Ləğv Et</button>
+                    <button type="submit" class="btn-primary">Yemək Əlavə Et</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-        // Load user data
-        async function loadUserData() {
-            try {
-                const response = await fetch('/api/user');
-                if (response.ok) {
-                    userData = await response.json();
-                    updateUI();
-                } else {
-                    window.location.href = '/register.html';
-                }
-            } catch (error) {
-                console.error('Error loading user data:', error);
-                window.location.href = '/register.html';
-            }
-        }
+    <!-- Add Progress Modal -->
+    <div id="add-progress-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tərəqqi Əlavə Et</h3>
+                <button class="modal-close" onclick="closeModal('add-progress-modal')">&times;</button>
+            </div>
+            <form id="add-progress-form">
+                <div class="form-group">
+                    <label>Tarix</label>
+                    <input type="date" id="progress-date" required>
+                </div>
+                <div class="form-group">
+                    <label>Çəki (kq)</label>
+                    <input type="number" id="progress-weight" step="0.1" min="30" max="300">
+                </div>
+                <div class="form-group">
+                    <label>Su İçimi (ml)</label>
+                    <input type="number" id="progress-water" min="0" max="10000">
+                </div>
+                <div class="form-group">
+                    <label>İdman (dəqiqə)</label>
+                    <input type="number" id="progress-exercise" min="0" max="1440">
+                </div>
+                <div class="form-group">
+                    <label>Qeydlər</label>
+                    <textarea id="progress-notes" rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('add-progress-modal')">Ləğv Et</button>
+                    <button type="submit" class="btn-primary">Tərəqqi Əlavə Et</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-        // Update UI with user data
-        function updateUI() {
-            if (userData) {
-                document.getElementById('balanceAmount').textContent = userData.balance;
-                document.getElementById('adsWatched').textContent = userData.adsWatchedToday || 0;
-                document.getElementById('totalEarned').textContent = userData.balance;
-            }
-        }
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+    </div>
 
-        // Watch ad functionality
-        document.getElementById('watchAdBtn').addEventListener('click', async () => {
-            if (adWatchCooldown) {
-                showMessage('Çox tez reklam baxırsınız. Bir dəqiqə gözləyin.', 'error');
-                return;
-            }
-
-            // Open ad in new window
-            const adWindow = window.open('https://www.profitableratecpm.com/tr68qctewa?key=1b55d1aca1c2d9e8811e5756abe60019', '_blank');
-            
-            // Disable button temporarily
-            const btn = document.getElementById('watchAdBtn');
-            btn.disabled = true;
-            btn.textContent = 'Reklam açılır...';
-            
-            // Wait a bit then record the ad view
-            setTimeout(async () => {
-                try {
-                    const response = await fetch('/api/watch-ad', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    });
-                    
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        showMessage(`${data.message} +${data.earned} qəpik`, 'success');
-                        loadUserData(); // Refresh user data
-                        
-                        // Set cooldown
-                        adWatchCooldown = true;
-                        let countdown = 60;
-                        
-                        const updateButton = () => {
-                            btn.textContent = `Gözləyin (${countdown}s)`;
-                            countdown--;
-                            
-                            if (countdown < 0) {
-                                adWatchCooldown = false;
-                                btn.disabled = false;
-                                btn.textContent = 'Reklam Bax (+0.0007 Qəpik)';
-                            } else {
-                                setTimeout(updateButton, 1000);
-                            }
-                        };
-                        
-                        updateButton();
-                    } else {
-                        showMessage(data.error, 'error');
-                        btn.disabled = false;
-                        btn.textContent = 'Reklam Bax (+0.0007 Qəpik)';
-                    }
-                } catch (error) {
-                    showMessage('Reklam baxış zamanı xəta baş verdi', 'error');
-                    btn.disabled = false;
-                    btn.textContent = 'Reklam Bax (+0.0007 Qəpik)';
-                }
-            }, 3000); // Wait 3 seconds before recording
-        });
-
-        // Show message function
-        function showMessage(text, type) {
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = text;
-            messageDiv.className = `message ${type}`;
-            messageDiv.classList.remove('hidden');
-            
-            setTimeout(() => {
-                messageDiv.classList.add('hidden');
-            }, 5000);
-        }
-
-        // Update active nav item
-        function updateActiveNav() {
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('href') === '/' && window.location.pathname === '/') {
-                    item.classList.add('active');
-                }
-            });
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadUserData();
-            updateActiveNav();
-        });
-    </script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
