@@ -1,96 +1,174 @@
+-- Diet Program Database Schema
+
 -- Users table
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    birth_date DATE NOT NULL,
-    balance DECIMAL(10,4) DEFAULT 0.0000,
-    ads_watched_today INTEGER DEFAULT 0,
-    last_promo_date DATE,
-    registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    session_id TEXT
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    birth_date DATE,
+    gender VARCHAR(10),
+    height DECIMAL(5,2), -- in cm
+    weight DECIMAL(5,2), -- in kg
+    activity_level VARCHAR(20), -- sedentary, light, moderate, active, very_active
+    goal VARCHAR(20), -- lose_weight, maintain, gain_weight, muscle_gain
+    target_weight DECIMAL(5,2),
+    daily_calorie_goal INTEGER,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Promo codes table
-CREATE TABLE IF NOT EXISTS promo_codes (
+-- Food items table
+CREATE TABLE IF NOT EXISTS food_items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    code VARCHAR(20) UNIQUE NOT NULL,
-    value DECIMAL(10,4) DEFAULT 0.0010,
-    is_used BOOLEAN DEFAULT 0,
-    used_by_user_id INTEGER,
-    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (used_by_user_id) REFERENCES users(id)
+    name VARCHAR(100) NOT NULL,
+    category VARCHAR(50), -- fruits, vegetables, proteins, grains, dairy, etc.
+    calories_per_100g INTEGER NOT NULL,
+    protein_per_100g DECIMAL(5,2) DEFAULT 0,
+    carbs_per_100g DECIMAL(5,2) DEFAULT 0,
+    fat_per_100g DECIMAL(5,2) DEFAULT 0,
+    fiber_per_100g DECIMAL(5,2) DEFAULT 0,
+    sugar_per_100g DECIMAL(5,2) DEFAULT 0,
+    sodium_per_100g DECIMAL(5,2) DEFAULT 0, -- in mg
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Withdrawals table
-CREATE TABLE IF NOT EXISTS withdrawals (
+-- Diet plans table
+CREATE TABLE IF NOT EXISTS diet_plans (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    type VARCHAR(50), -- mediterranean, keto, vegan, paleo, balanced, etc.
+    duration_days INTEGER,
+    target_calories INTEGER,
+    created_by INTEGER,
+    is_public BOOLEAN DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (created_by) REFERENCES users(id)
+);
+
+-- Meals table
+CREATE TABLE IF NOT EXISTS meals (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
-    amount DECIMAL(10,4) NOT NULL,
-    method VARCHAR(20) NOT NULL,
-    account_details TEXT NOT NULL,
-    status VARCHAR(20) DEFAULT 'pending',
-    request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    processed_date TIMESTAMP,
+    meal_type VARCHAR(20) NOT NULL, -- breakfast, lunch, dinner, snack
+    meal_date DATE NOT NULL,
+    total_calories INTEGER DEFAULT 0,
+    total_protein DECIMAL(5,2) DEFAULT 0,
+    total_carbs DECIMAL(5,2) DEFAULT 0,
+    total_fat DECIMAL(5,2) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Ad views table
-CREATE TABLE IF NOT EXISTS ad_views (
+-- Meal items table (foods in each meal)
+CREATE TABLE IF NOT EXISTS meal_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    meal_id INTEGER NOT NULL,
+    food_item_id INTEGER NOT NULL,
+    quantity DECIMAL(6,2) NOT NULL, -- in grams
+    calories INTEGER,
+    protein DECIMAL(5,2),
+    carbs DECIMAL(5,2),
+    fat DECIMAL(5,2),
+    FOREIGN KEY (meal_id) REFERENCES meals(id) ON DELETE CASCADE,
+    FOREIGN KEY (food_item_id) REFERENCES food_items(id)
+);
+
+-- User progress tracking
+CREATE TABLE IF NOT EXISTS user_progress (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
-    earnings DECIMAL(10,4) DEFAULT 0.0007,
-    view_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date DATE NOT NULL,
+    weight DECIMAL(5,2),
+    daily_calories INTEGER DEFAULT 0,
+    daily_protein DECIMAL(5,2) DEFAULT 0,
+    daily_carbs DECIMAL(5,2) DEFAULT 0,
+    daily_fat DECIMAL(5,2) DEFAULT 0,
+    water_intake INTEGER DEFAULT 0, -- in ml
+    exercise_minutes INTEGER DEFAULT 0,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    UNIQUE(user_id, date)
+);
+
+-- Diet plan meals (template meals for diet plans)
+CREATE TABLE IF NOT EXISTS diet_plan_meals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    diet_plan_id INTEGER NOT NULL,
+    day_number INTEGER NOT NULL,
+    meal_type VARCHAR(20) NOT NULL,
+    meal_name VARCHAR(100),
+    instructions TEXT,
+    total_calories INTEGER,
+    FOREIGN KEY (diet_plan_id) REFERENCES diet_plans(id) ON DELETE CASCADE
+);
+
+-- Diet plan meal items
+CREATE TABLE IF NOT EXISTS diet_plan_meal_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    diet_plan_meal_id INTEGER NOT NULL,
+    food_item_id INTEGER NOT NULL,
+    quantity DECIMAL(6,2) NOT NULL,
+    FOREIGN KEY (diet_plan_meal_id) REFERENCES diet_plan_meals(id) ON DELETE CASCADE,
+    FOREIGN KEY (food_item_id) REFERENCES food_items(id)
+);
+
+-- User goals and achievements
+CREATE TABLE IF NOT EXISTS user_goals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    goal_type VARCHAR(50) NOT NULL, -- weight_loss, calorie_target, water_intake, etc.
+    target_value DECIMAL(10,2),
+    current_value DECIMAL(10,2) DEFAULT 0,
+    target_date DATE,
+    is_achieved BOOLEAN DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- Insert 50 promo codes
-INSERT OR IGNORE INTO promo_codes (code) VALUES 
-('EARN2024A1B2C3'),
-('BONUS5X7Y9Z4K6'),
-('REWARD8M3N7P2Q5'),
-('GIFT1L4R8T9W2E'),
-('LUCKY3F6H9J1K4'),
-('MONEY7S2D5G8H0'),
-('COINS9Q3W6E8R1'),
-('PRIZE4T7Y2U5I8'),
-('CASH6R9T1Y4U7I'),
-('GOLD2E5R8T1Y4U'),
-('SILVER3W6E9R2T5'),
-('BRONZE7Y1U4I8O0'),
-('DIAMOND5T8Y2U6I9'),
-('RUBY3R7T1Y5U8I'),
-('EMERALD9E2R6T0Y4'),
-('SAPPHIRE1Y5U8I2O6'),
-('PEARL4U7I1O5P9S'),
-('CRYSTAL6I0O4P8S2D'),
-('TREASURE8O3P7S1D5F'),
-('FORTUNE1P6S0D4F8G2'),
-('WEALTH3S8D2F6G0H4'),
-('RICHES5D1F5G9H3J7'),
-('JACKPOT7F4G8H2J6K0'),
-('WINNER9G7H1J5K9L3'),
-('CHAMPION2H0J4K8L2Z6'),
-('VICTORY4J3K7L1Z5X9'),
-('SUCCESS6K6L0Z4X8C2'),
-('TRIUMPH8L9Z3X7C1V5'),
-('ACHIEVE0Z2X6C0V4B8'),
-('PROSPER2X5C9V3B7N1'),
-('THRIVE4C8V2B6N0M4'),
-('FLOURISH6V1B5N9M3Q7'),
-('ADVANCE8B4N8M2Q6W0'),
-('PROGRESS0N7M1Q5W9E3'),
-('DEVELOP2M0Q4W8E2R6'),
-('IMPROVE4Q3W7E1R5T9'),
-('ENHANCE6W6E0R4T8Y2'),
-('UPGRADE8E9R3T7Y1U5'),
-('BOOST0R2T6Y0U4I8O'),
-('ELEVATE2T5Y9U3I7O1'),
-('MAXIMIZE4Y8U2I6O0P4'),
-('OPTIMIZE6U1I5O9P3A7'),
-('AMPLIFY8I4O8P2A6S0'),
-('MULTIPLY0O7P1A5S9D3'),
-('INCREASE2P0A4S8D2F6'),
-('EXPAND4A3S7D1F5G9H'),
-('EXTEND6S6D0F4G8H2J'),
-('STRETCH8D9F3G7H1J5K'),
-('BROADEN0F2G6H0J4K8L'),
-('WIDEN2G5H9J3K7L1Z5');
+-- Insert sample food items
+INSERT OR REPLACE INTO food_items (name, category, calories_per_100g, protein_per_100g, carbs_per_100g, fat_per_100g, fiber_per_100g) VALUES
+-- Fruits
+('Apple', 'fruits', 52, 0.3, 14, 0.2, 2.4),
+('Banana', 'fruits', 89, 1.1, 23, 0.3, 2.6),
+('Orange', 'fruits', 47, 0.9, 12, 0.1, 2.4),
+('Strawberry', 'fruits', 32, 0.7, 8, 0.3, 2.0),
+
+-- Vegetables
+('Broccoli', 'vegetables', 34, 2.8, 7, 0.4, 2.6),
+('Carrot', 'vegetables', 41, 0.9, 10, 0.2, 2.8),
+('Spinach', 'vegetables', 23, 2.9, 4, 0.4, 2.2),
+('Tomato', 'vegetables', 18, 0.9, 4, 0.2, 1.2),
+
+-- Proteins
+('Chicken Breast', 'proteins', 165, 31, 0, 3.6, 0),
+('Salmon', 'proteins', 208, 20, 0, 13, 0),
+('Eggs', 'proteins', 155, 13, 1, 11, 0),
+('Turkey', 'proteins', 135, 30, 0, 1, 0),
+
+-- Grains
+('Brown Rice', 'grains', 123, 2.6, 25, 1, 1.8),
+('Oats', 'grains', 389, 17, 66, 7, 10.6),
+('Quinoa', 'grains', 120, 4.4, 22, 1.9, 2.8),
+('Whole Wheat Bread', 'grains', 247, 13, 41, 4, 7),
+
+-- Dairy
+('Greek Yogurt', 'dairy', 59, 10, 4, 0.4, 0),
+('Milk (Low Fat)', 'dairy', 42, 3.4, 5, 1, 0),
+('Cheese (Cheddar)', 'dairy', 402, 25, 1, 33, 0),
+
+-- Nuts and Seeds
+('Almonds', 'nuts', 579, 21, 22, 50, 12),
+('Walnuts', 'nuts', 654, 15, 14, 65, 7),
+('Chia Seeds', 'seeds', 486, 17, 42, 31, 34);
+
+-- Insert sample diet plans
+INSERT OR REPLACE INTO diet_plans (name, description, type, duration_days, target_calories, is_public) VALUES
+('Mediterranean Diet Plan', 'A heart-healthy diet based on Mediterranean cuisine', 'mediterranean', 30, 1800, 1),
+('Balanced Weight Loss', 'Balanced approach to healthy weight loss', 'balanced', 28, 1500, 1),
+('High Protein Muscle Gain', 'High protein diet for muscle building', 'high_protein', 30, 2200, 1),
+('Plant-Based Nutrition', 'Complete plant-based nutrition plan', 'vegan', 21, 1600, 1);

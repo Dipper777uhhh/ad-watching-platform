@@ -1,7 +1,7 @@
 {
-  "name": "ad-watching-platform",
+  "name": "diet-program",
   "version": "1.0.0",
-  "description": "Ad watching platform with earning system",
+  "description": "Comprehensive diet program and nutrition tracking application",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -13,12 +13,13 @@
     "sqlite3": "^5.1.6",
     "body-parser": "^1.20.2",
     "bcrypt": "^5.1.1",
-    "express-rate-limit": "^6.10.0"
+    "express-rate-limit": "^6.10.0",
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
   },
-  "keywords": ["ads", "earning", "platform"],
+  "keywords": ["diet", "nutrition", "health", "meal-planning"],
   "author": "Admin",
   "license": "MIT"
 }
